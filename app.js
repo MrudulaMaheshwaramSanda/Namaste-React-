@@ -1,29 +1,57 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 
-const heading = React.createElement("h1", {
-    id: "Heading"
-}, "Hello World From React");
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(heading);
+// const heading = React.createElement("h1", {
+//     id: "heading",
+// }, "Namaste React"); //React Element, it will return an object, when we render this element on to dom then it becomes a html element
 
-const parent = React.createElement(
-    "div", 
-    {id: "parent"}, 
-    [
-        React.createElement(
-            "div", 
-            {id: "child"}, 
-            [ React.createElement("h1", {}, "Hi Hello Bye bye"), 
-                React.createElement("h2", {}, "Hello") ] 
-        ),
-        React.createElement(
-            "div", 
-            {id: "child2"}, 
-            [ React.createElement("h1", {}, "Hi"), 
-                React.createElement("h2", {}, "Hello") ] 
-        )
-    ]
+const jsxHeading = <h1 className="heading">Namaste React from JSX</h1> //h1 in jsx format that will converted into react element in babel
+
+//react component
+//React Functional Component
+const HeadingComponent = () => {
+    return <h1> Namaste React </h1>;
+}
+
+// render one componeny into another - component composition
+
+const number = 1000; //js variable
+
+//ELement inside element
+const elem = <span>React Element</span>
+
+const title =(
+    <h2>
+        {elem} 
+        Namaste Element 
+    </h2>
+    
 )
 
-root.render(parent);
+const HeadingComponent1  = () => (
+    <div id="container">
+        {/* //Below 2 are same */}
+        <HeadingComponent />
+        <HeadingComponent></HeadingComponent>
+        {HeadingComponent()}
+        {/* //element inside component */}
+        {title} 
+        <h2>{
+            number+100  //This is a js code - 1100 will be displayed as h2 tag
+
+        }
+        </h2>     
+        <h1 className="heading"> Namaste React Functional component</h1>
+    </div>
+
+);
+
+
+const root = ReactDOM.createRoot(document.getElementById("root")); //html element with id as root will become the root element
+
+root.render(<HeadingComponent1 />); //rendering react element on the dom, jsd heading is a react element
+
+
+
+
+
