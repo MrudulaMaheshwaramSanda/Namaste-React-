@@ -17,3 +17,37 @@
     Host app on https
     Tree Shaking - remove unused code 
     Differenct dev n prod bundles - production takes little time 
+
+# Food Ordering App
+
+// components of app
+
+ * Header - logo component
+ *          Nav items (home about us cart etc)
+ * Body   - search bar
+ *          resto card container
+ *              restau cards
+ *                  img
+ *                  name of res, star             rating, cuisine, delivery time
+ * footer  - copyright
+ *           links
+ *           contact
+
+ Two Types of Export/Import
+
+ -Default export/import
+    export default component;
+    import component from "path";
+
+-Named export/import
+    export const component;
+    import {component} from "path";
+
+# React Hooks
+
+Normal JS utility functions given by React(node_modules)
+2 important Hooks
+    useState() - used to create state variables
+    useEffect()
+
+ 
