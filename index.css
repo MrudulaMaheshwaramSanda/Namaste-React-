@@ -43,6 +43,7 @@
 .res-logo{
     width: 100%;
     object-fit: cover;
+    height: 300px;
 }
 
 .RestroContainer {
@@ -53,4 +54,32 @@
 .filter-btn{
     margin: 10px;
     cursor:pointer;
+}
+
+.shimmer-container{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.shimmer-card{
+    margin: 20px;
+    width: 300px;
+    height: 400px;
+    background-color: #f0f0f0;
+}
+
+.Login{
+    padding: 0 20px;
+    margin: 10px;
+    border: none;
+}
+
+.Login:hover{
+    cursor: pointer;
+    background-color:chartreuse;
+    font-weight: bold;
+}
+
+.filter{
+    display:flex;
 }

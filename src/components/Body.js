@@ -1,6 +1,7 @@
 import RestaurantCard  from "./RestaurantCard";
 import dataObj from "../utils/mockData";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Shimmer from "./Shimmer";
 
 //When we have hard coded data, neer keep it in components file
 // const dataObj = [
@@ -2410,7 +2411,10 @@ import { useState } from "react";
 
 const Body = () => {
     //local state variable - powerful variable 
-     let [listOfRestaurants, setListofRestaurants] = useState(dataObj);
+     let [listOfRestaurants, setListofRestaurants] = useState([]);
+     const[filteredRestaurants, setFilteredRestaurants] = useState([]); // we dont want to modify actual list because at time of search it will filter from the filtered restaurants
+
+     const [searchText, setSearchText] = useState(""); //local state variable for search bar
 
      //Can also be used as array destructuring
 
@@ -2420,7 +2424,31 @@ const Body = () => {
     //  const listOfRestaurants = arr[0];
     //  const setListofRestaurants = arr[1];
 
+    useEffect(() =>{
+         fetchData();
+    }, []); //First body will be rendered then fetch will be called
 
+    const fetchData = async () =>{
+        const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=17.4075124&lng=78.4974931&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"); //data is fetched from api by bypassing CORS policy with chrom extension
+        const json = await data.json(); //converting readable stream to json
+
+        console.log(json);
+
+        setListofRestaurants(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants); //fetching path of our restaurants card from api data
+        setFilteredRestaurants(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+    };
+
+    //Until data gets fetched from api and renders, display loading. but this is not a good way. So we need to go from shimmer UI
+
+    // if(listOfRestaurants.length === 0){
+    //     return <h1>Loading.......</h1>
+    // }
+
+    // this is called conditional rendering
+        // if(listOfRestaurants.length===0){
+        //     return <Shimmer />;
+        // }
+    
 
     //Normal JS variable
     // let listOfRestaurants = [
@@ -2782,28 +2810,41 @@ const Body = () => {
 
     // ]; 
 
-    return (<div className="body">
+    //conditional rendering using ternary operator
+    return ((listOfRestaurants.length===0)? <Shimmer/> : (<div className="body">
         <div className="filter">
+            <div className="search">
+                <input type="text" className="SearchBox" value={searchText} onChange={
+                    (e) => {
+                        setSearchText(e.target.value);  //updating the search text based on the value, for every key that we give in search box the whole body component will be re rendered as state variable is changing
+                    }
+                } placeholder="Type your fav Restaurant" />
+                <button onClick = {() => {
+                        const filterRestaurants = 
+                            listOfRestaurants.filter((resturant) => (resturant.info.name.toLowerCase()).includes(searchText.toLowerCase())
+                        );//Filter the restaurants and update the UI
+
+                        setFilteredRestaurants(filterRestaurants);
+                    }
+                }>Search</button>
+            </div>
             <button className="filter-btn" onClick={() => { 
                 // console.log(listOfRestaurants);
                 setListofRestaurants(
-                     listOfRestaurants.filter((res) => res.rating.text > 4.5) //filtering restaurants whose rating > 4
+                     listOfRestaurants.filter((res) => Number(res.info.avgRating) > 4) //filtering restaurants whose rating > 4
                 ); //listofrestaurants is updated and as state variable is updated the react re redenders whole component
             }}>Top Rated Restaurants</button>
         </div>
-        <div className="search">
-           <input placeholder="Type your fav Restaurant" />
-            <button>Search</button>
-        </div>
+        
         <div className="RestroContainer">
             {
-                listOfRestaurants.map((restaurant) => 
-                    <RestaurantCard key={restaurant.storeUuid} resData={restaurant} />  //This represents a config driven UI, Key is used to avoid re rendering of the UI whenever a new restaurant is added
+                filteredRestaurants.map((restaurant) => 
+                    <RestaurantCard key={restaurant.info.id} resData={restaurant} />  //This represents a config driven UI, Key is used to avoid re rendering of the UI whenever a new restaurant is added
                 ) 
             }
             
         </div>
-    </div>
+    </div>)
     )
 }
 
