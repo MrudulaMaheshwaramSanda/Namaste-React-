@@ -1,8 +1,14 @@
 import { LOGO_URL } from "../utils/constants"; //importing named export
 import { useState } from "react";
+import {Link} from "react-router-dom"; //link will not refresh the whole page only body will change
 const Header = () => {
 
     const [buttonName, setButtonName] = useState("LogIn");
+
+    //useEffect(()=>{}, []);
+//if no dependency useEffect will be called after every render of component
+// if there is dependency useEffect will be called only on initial render of component
+// 
     
     return (
         <div className="header">
@@ -11,9 +17,9 @@ const Header = () => {
             </div>
             <div className="navitems">
                 <ul>
-                    <li>Home</li>
-                    <li>About us</li>
-                    <li>Contact us</li>
+                    <li><Link to="/">Home</Link></li>
+                    <li><Link to="/about">About us</Link></li>
+                    <li><Link to="/contact">Contact us</Link></li>
                     <li>Cart</li>
                     <button className="Login" onClick = {
                         () => {

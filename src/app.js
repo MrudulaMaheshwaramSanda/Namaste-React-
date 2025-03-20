@@ -2,7 +2,12 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import Header from "./components/Header";
 import Body from "./components/Body"
-
+import About from "./components/About";
+import Error from "./components/Error";
+import Contact from "./components/Contact";
+import RestaurantMenu from "./components/RestaurantMenu";
+import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom"
+import RestaurantCard from "./components/RestaurantCard";
 // const heading = React.createElement("h1", {
 //     id: "heading",
 // }, "Namaste React"); //React Element, it will return an object, when we render this element on to dom then it becomes a html element
@@ -63,15 +68,42 @@ import Body from "./components/Body"
 const AppLayout = () => {
     return (
         <div className="app">
-            {Header()}
-            {Body()}
+            <Header />
+            <Outlet />
         </div>
-    )
+    );
 }
+
+const appRouter = createBrowserRouter([ //for router configuration
+    {
+        path: "/", 
+        element: <AppLayout />, //App Layout has 3 childern
+        children: [
+            {
+                path: "/",
+                element: <Body />,
+            },
+            {
+                path: "/about",  //If path is about load about component
+                element: <About /> ,
+            },
+            {
+                path: "/contact",  //If path is about load about component
+                element: <Contact /> ,
+            },
+            {
+                path: "/restaurants/:resId", //Dynamic routing wrt to resId
+                element: <RestaurantMenu />
+            }
+        ],
+        errorElement: <Error />, //Error component will be rendered when there is wrong path
+    },
+    
+])
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
-root.render(<AppLayout />)
+root.render(<RouterProvider router={appRouter} />) //for providing router config to app
 
 
 

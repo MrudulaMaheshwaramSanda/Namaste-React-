@@ -50,4 +50,8 @@ Normal JS utility functions given by React(node_modules)
     useState() - used to create state variables
     useEffect()
 
+# Routing
+    Client Side Routing - Rendering all components at 1st load and then rendering components when they are clicked instead of making network calls
+    Server Side Routing - Making network call for every click
+
  

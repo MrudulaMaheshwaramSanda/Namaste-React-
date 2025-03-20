@@ -2,6 +2,8 @@ import RestaurantCard  from "./RestaurantCard";
 import dataObj from "../utils/mockData";
 import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
+import {Link} from "react-router-dom";
+
 
 //When we have hard coded data, neer keep it in components file
 // const dataObj = [
@@ -2432,7 +2434,6 @@ const Body = () => {
         const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=17.4075124&lng=78.4974931&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"); //data is fetched from api by bypassing CORS policy with chrom extension
         const json = await data.json(); //converting readable stream to json
 
-        console.log(json);
 
         setListofRestaurants(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants); //fetching path of our restaurants card from api data
         setFilteredRestaurants(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
@@ -2838,9 +2839,14 @@ const Body = () => {
         
         <div className="RestroContainer">
             {
-                filteredRestaurants.map((restaurant) => 
-                    <RestaurantCard key={restaurant.info.id} resData={restaurant} />  //This represents a config driven UI, Key is used to avoid re rendering of the UI whenever a new restaurant is added
-                ) 
+                filteredRestaurants.map((restaurant) => (
+                    <Link key={restaurant.info.id} to={"/restaurants/" + restaurant.info.id}>
+                        {/* //When any card is clicked its related data willl be displayed */}
+                    <RestaurantCard resData={restaurant} />  
+                    {/* //This represents a config driven UI, Key is used to avoid re rendering of the UI whenever a new restaurant is added */}
+                    </Link>
+
+                ) )
             }
             
         </div>
