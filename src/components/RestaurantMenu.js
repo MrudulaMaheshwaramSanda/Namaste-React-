@@ -44,7 +44,9 @@ const RestaurantMenu = () =>
             <h3>{resInfo?.data?.cards[2]?.card?.card?.info?.costForTwoMessage}</h3>
             <ul>
                 {itemCards.map((item) => {
-                    return <li key={item.card.info.id}> {item?.card?.info?.name} -  {"Rs"} {(item?.card?.info?.price) / 100}</li>
+                    return <li key={item.card.info.id}> {item?.card?.info?.name} -  {"Rs"} {(item?.card?.info?.
+                        defaultPrice || item?.card?.info?.price
+                        ) / 100}</li>
                 })}
             </ul>
         </div>

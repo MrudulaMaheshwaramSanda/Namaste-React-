@@ -3,6 +3,7 @@ import dataObj from "../utils/mockData";
 import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
 import {Link} from "react-router-dom";
+import { MAIN_API } from "../utils/constants";
 
 
 //When we have hard coded data, neer keep it in components file
@@ -2431,7 +2432,7 @@ const Body = () => {
     }, []); //First body will be rendered then fetch will be called
 
     const fetchData = async () =>{
-        const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=17.4075124&lng=78.4974931&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"); //data is fetched from api by bypassing CORS policy with chrom extension
+        const data = await fetch(MAIN_API); //data is fetched from api by bypassing CORS policy with chrom extension
         const json = await data.json(); //converting readable stream to json
 
 
