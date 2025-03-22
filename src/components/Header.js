@@ -1,9 +1,13 @@
 import { LOGO_URL } from "../utils/constants"; //importing named export
 import { useState } from "react";
 import {Link} from "react-router-dom"; //link will not refresh the whole page only body will change
+import useOnlineStatus from "../utils/useOnlineStatus";
+
 const Header = () => {
 
     const [buttonName, setButtonName] = useState("LogIn");
+
+    const onlineStatus = useOnlineStatus();
 
     //useEffect(()=>{}, []);
 //if no dependency useEffect will be called after every render of component
@@ -17,9 +21,11 @@ const Header = () => {
             </div>
             <div className="navitems">
                 <ul>
+                    <li>Online Status :{onlineStatus ? "Online": " Offline"}</li>
                     <li><Link to="/">Home</Link></li>
                     <li><Link to="/about">About us</Link></li>
                     <li><Link to="/contact">Contact us</Link></li>
+                    <li><Link to="/grocery">Grocery</Link></li>
                     <li>Cart</li>
                     <button className="Login" onClick = {
                         () => {
@@ -32,6 +38,8 @@ const Header = () => {
                         
                         }
                     }>{buttonName}</button>
+                    
+                    
                 </ul>
             </div>
         </div>

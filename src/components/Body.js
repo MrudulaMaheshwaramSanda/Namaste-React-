@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
 import {Link} from "react-router-dom";
 import { MAIN_API } from "../utils/constants";
+import useOnlineStatus from "../utils/useOnlineStatus"
 
 
 //When we have hard coded data, neer keep it in components file
@@ -2414,7 +2415,7 @@ import { MAIN_API } from "../utils/constants";
 
 const Body = () => {
     //local state variable - powerful variable 
-     let [listOfRestaurants, setListofRestaurants] = useState([]);
+     const [listOfRestaurants, setListofRestaurants] = useState([]);
      const[filteredRestaurants, setFilteredRestaurants] = useState([]); // we dont want to modify actual list because at time of search it will filter from the filtered restaurants
 
      const [searchText, setSearchText] = useState(""); //local state variable for search bar
@@ -2434,12 +2435,35 @@ const Body = () => {
     const fetchData = async () =>{
         const data = await fetch(MAIN_API); //data is fetched from api by bypassing CORS policy with chrom extension
         const json = await data.json(); //converting readable stream to json
+        console.log(json);
 
+        // const {restaurants} = (json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants)||(json?.data?.cards[3]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
 
-        setListofRestaurants(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants); //fetching path of our restaurants card from api data
-        setFilteredRestaurants(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+        if(json?.data?.cards[3]?.card?.card?.gridElements === undefined){
+            setListofRestaurants(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants); //fetching path of our restaurants card from api data
+            setFilteredRestaurants(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+
+        }
+        else{
+            setListofRestaurants(json?.data?.cards[3]?.card?.card?.gridElements?.infoWithStyle?.restaurants); //fetching path of our restaurants card from api data
+        setFilteredRestaurants(json?.data?.cards[3]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+        }
+        
+
+        // setListofRestaurants(restaurants);
+        // setFilteredRestaurants(restaurants);
+        
+        console.log(listOfRestaurants);
+        console.log(filteredRestaurants);
     };
 
+    const onlineStatus = useOnlineStatus();
+
+    if(onlineStatus === false){
+        return (
+            <h1>Your are Offline!!!</h1>
+        )
+    }
     //Until data gets fetched from api and renders, display loading. but this is not a good way. So we need to go from shimmer UI
 
     // if(listOfRestaurants.length === 0){
@@ -2813,7 +2837,7 @@ const Body = () => {
     // ]; 
 
     //conditional rendering using ternary operator
-    return ((listOfRestaurants.length===0)? <Shimmer/> : (<div className="body">
+    return ((listOfRestaurants.length===0)?<Shimmer/>:(<div className="body">
         <div className="filter">
             <div className="search">
                 <input type="text" className="SearchBox" value={searchText} onChange={
@@ -2831,10 +2855,15 @@ const Body = () => {
                 }>Search</button>
             </div>
             <button className="filter-btn" onClick={() => { 
-                // console.log(listOfRestaurants);
-                setListofRestaurants(
-                     listOfRestaurants.filter((res) => Number(res.info.avgRating) > 4) //filtering restaurants whose rating > 4
+                const filteredListOfRestaurants = filteredRestaurants.filter((res) => {
+                    const avgRating = Number(res.info.avgRatingString);
+                    return  avgRating > 4 ;
+                })      
+                setListofRestaurants(filteredListOfRestaurants
+                     //filtering restaurants whose rating > 4
                 ); //listofrestaurants is updated and as state variable is updated the react re redenders whole component
+                setFilteredRestaurants(filteredListOfRestaurants);
+                
             }}>Top Rated Restaurants</button>
         </div>
         
@@ -2851,8 +2880,7 @@ const Body = () => {
             }
             
         </div>
-    </div>)
-    )
+    </div>))
 }
 
 export default Body;

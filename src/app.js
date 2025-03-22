@@ -8,6 +8,9 @@ import Contact from "./components/Contact";
 import RestaurantMenu from "./components/RestaurantMenu";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom"
 import RestaurantCard from "./components/RestaurantCard";
+//import Grocery from "./components/Grocery";
+import { lazy} from "react";
+
 // const heading = React.createElement("h1", {
 //     id: "heading",
 // }, "Namaste React"); //React Element, it will return an object, when we render this element on to dom then it becomes a html element
@@ -65,6 +68,10 @@ import RestaurantCard from "./components/RestaurantCard";
 // const styleCard = {
 //     backgroundColor: "#f0f0f0"
 // }
+const Grocery = lazy(() => import("./components/Grocery")); //lazy loading
+
+// const About = lazy(() => import("./components/About"));
+
 const AppLayout = () => {
     return (
         <div className="app">
@@ -94,6 +101,10 @@ const appRouter = createBrowserRouter([ //for router configuration
             {
                 path: "/restaurants/:resId", //Dynamic routing wrt to resId
                 element: <RestaurantMenu />
+            },
+            {
+                path: "/grocery",
+                element: <Grocery />
             }
         ],
         errorElement: <Error />, //Error component will be rendered when there is wrong path
