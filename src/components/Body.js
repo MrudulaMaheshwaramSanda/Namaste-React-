@@ -1,10 +1,12 @@
 import RestaurantCard  from "./RestaurantCard";
 import dataObj from "../utils/mockData";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import Shimmer from "./Shimmer";
 import {Link} from "react-router-dom";
 import { MAIN_API } from "../utils/constants";
 import useOnlineStatus from "../utils/useOnlineStatus"
+import { withPromotedLabel } from "./RestaurantCard";
+import { UserContext } from "../utils/UserContext";
 
 
 //When we have hard coded data, neer keep it in components file
@@ -2420,6 +2422,8 @@ const Body = () => {
 
      const [searchText, setSearchText] = useState(""); //local state variable for search bar
 
+     const RestaurantCardPromoted = withPromotedLabel(RestaurantCard); //Higher Order Component
+
      //Can also be used as array destructuring
 
     //  const arr = useState(resList); , useState returns an array
@@ -2435,7 +2439,6 @@ const Body = () => {
     const fetchData = async () =>{
         const data = await fetch(MAIN_API); //data is fetched from api by bypassing CORS policy with chrom extension
         const json = await data.json(); //converting readable stream to json
-        console.log(json);
 
         // const {restaurants} = (json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants)||(json?.data?.cards[3]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
 
@@ -2453,8 +2456,6 @@ const Body = () => {
         // setListofRestaurants(restaurants);
         // setFilteredRestaurants(restaurants);
         
-        console.log(listOfRestaurants);
-        console.log(filteredRestaurants);
     };
 
     const onlineStatus = useOnlineStatus();
@@ -2463,7 +2464,11 @@ const Body = () => {
         return (
             <h1>Your are Offline!!!</h1>
         )
+
     }
+
+    const {loggedInUser, setUserInfo} = useContext(UserContext);
+
     //Until data gets fetched from api and renders, display loading. but this is not a good way. So we need to go from shimmer UI
 
     // if(listOfRestaurants.length === 0){
@@ -2838,14 +2843,14 @@ const Body = () => {
 
     //conditional rendering using ternary operator
     return ((listOfRestaurants.length===0)?<Shimmer/>:(<div className="body">
-        <div className="filter">
-            <div className="search">
-                <input type="text" className="SearchBox" value={searchText} onChange={
+        <div className="flex">
+            <div className="search p-4">
+                <input type="text" className="border border-solid border-black" value={searchText} onChange={
                     (e) => {
                         setSearchText(e.target.value);  //updating the search text based on the value, for every key that we give in search box the whole body component will be re rendered as state variable is changing
                     }
                 } placeholder="Type your fav Restaurant" />
-                <button onClick = {() => {
+                <button className="m-4 px-2 py-0.5 bg-green-400 border-black rounded-lg hover:cursor-pointer hover:bg-green-500" onClick = {() => {
                         const filterRestaurants = 
                             listOfRestaurants.filter((resturant) => (resturant.info.name.toLowerCase()).includes(searchText.toLowerCase())
                         );//Filter the restaurants and update the UI
@@ -2854,7 +2859,8 @@ const Body = () => {
                     }
                 }>Search</button>
             </div>
-            <button className="filter-btn" onClick={() => { 
+            <div className="flex px-2 items-center">
+                <button className="px-2 py-1 border border-black rounded-lg bg-gray-100 hover:cursor-pointer hover:bg-gray-300" onClick={() => { 
                 const filteredListOfRestaurants = filteredRestaurants.filter((res) => {
                     const avgRating = Number(res.info.avgRatingString);
                     return  avgRating > 4 ;
@@ -2865,14 +2871,24 @@ const Body = () => {
                 setFilteredRestaurants(filteredListOfRestaurants);
                 
             }}>Top Rated Restaurants</button>
+
+            </div>
+            <div className="m-7 px-2 py-0.5">
+                <label className="m-2">User Name</label>
+                <input className=" border border-black" value={loggedInUser} onChange={(e)=>setUserInfo(e.target.value)}/>
+            </div>
+            
         </div>
         
-        <div className="RestroContainer">
+        <div className="flex flex-wrap">
             {
                 filteredRestaurants.map((restaurant) => (
                     <Link key={restaurant.info.id} to={"/restaurants/" + restaurant.info.id}>
                         {/* //When any card is clicked its related data willl be displayed */}
-                    <RestaurantCard resData={restaurant} />  
+                        {
+                            (restaurant.info.aggregatedDiscountInfoV3)?<RestaurantCardPromoted resData={restaurant}/>: <RestaurantCard resData={restaurant} />
+                            
+                        }
                     {/* //This represents a config driven UI, Key is used to avoid re rendering of the UI whenever a new restaurant is added */}
                     </Link>
 

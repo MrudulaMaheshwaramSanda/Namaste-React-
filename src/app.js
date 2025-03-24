@@ -10,6 +10,8 @@ import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom"
 import RestaurantCard from "./components/RestaurantCard";
 //import Grocery from "./components/Grocery";
 import { lazy} from "react";
+import { UserContext } from "./utils/UserContext"
+import {useState, useEffect} from "react";
 
 // const heading = React.createElement("h1", {
 //     id: "heading",
@@ -73,11 +75,26 @@ const Grocery = lazy(() => import("./components/Grocery")); //lazy loading
 // const About = lazy(() => import("./components/About"));
 
 const AppLayout = () => {
+
+    //Authenticatin code 
+    const [userInfo, setUserInfo] = useState();
+
+    useEffect(()=>{
+        //API is called and user data changed
+        const data = {
+            name:"Mrudula"
+        };
+        setUserInfo(data.name);
+    }, []);
     return (
+        //Overiding the context value
+        <UserContext.Provider value={{loggedInUser: userInfo, setUserInfo}}>
         <div className="app">
-            <Header />
-            <Outlet />
+        <Header />
+        <Outlet />
         </div>
+
+        </UserContext.Provider>
     );
 }
 

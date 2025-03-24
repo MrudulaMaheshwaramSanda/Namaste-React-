@@ -3,6 +3,7 @@ import Shimmer from "./Shimmer";
 import {dataObj2} from "../utils/mockData"
 import {useParams} from "react-router-dom";
 import useRestaurantMenu from "../utils/useRestaurantManu";
+import {RestaurantCategory} from "./RestaurantCategory";
 
 
 const RestaurantMenu = () =>
@@ -13,9 +14,8 @@ const RestaurantMenu = () =>
 
     const resInfo = useRestaurantMenu(resId);
 
-    console.log("Folowoung s res info");
+    const [showIndex, setShowIndex] = useState(null);
 
-    console.log(resInfo);
 
 //      useEffect(() => {
 //           fetchMenu();
@@ -41,19 +41,26 @@ const RestaurantMenu = () =>
     let {itemCards} = resInfo?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]?.card?.card;
 
    if(itemCards === undefined){
-      console.log("if entered");
       itemCards = resInfo?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[4]?.card?.card?.itemCards;
    }
 
-    console.log(itemCards);
+    //console.log(itemCards);
 
     // console.log(resInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card?.card?.itemCards[0]);
+
+    const categories = resInfo?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter(c => c.card?.card?.["@type"] === "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory" || "type.googleapis.com/swiggy.presentation.food.v2.NestedItemCategory");
+
      
     return (
-        <div className="menu">
-            <h1>{resInfo?.data?.cards[2]?.card?.card?.info?.name}</h1>
-            <h3>{resInfo?.data?.cards[2]?.card?.card?.info?.cuisines.join(" , ")}</h3>
-            <h3>{resInfo?.data?.cards[2]?.card?.card?.info?.city}, {resInfo?.data?.cards[2]?.card?.card?.info?.locality}, {resInfo?.data?.cards[2]?.card?.card?.info?.areaName}</h3>
+        <div className="text-center">
+            <h1 className = "font-bold my-6 text-2xl">{resInfo?.data?.cards[2]?.card?.card?.info?.name}</h1>
+            <p className="font-bold text-lg">{resInfo?.data?.cards[2]?.card?.card?.info?.cuisines.join(" , ")}</p>
+            {/* Categories Accordians        */}
+            {categories.map((category, index) => <RestaurantCategory key={category.card.card.title} data={category.card.card} 
+            //Parent is controlling the expanding n colapsing accordians
+                showItems={index===showIndex && true}
+                setShowIndex={()=>setShowIndex(index)}/>)}  
+            {/* <h3>{resInfo?.data?.cards[2]?.card?.card?.info?.city}, {resInfo?.data?.cards[2]?.card?.card?.info?.locality}, {resInfo?.data?.cards[2]?.card?.card?.info?.areaName}</h3>
             <h3>{resInfo?.data?.cards[2]?.card?.card?.info?.costForTwoMessage}</h3>
             <ul>
                 {
@@ -64,7 +71,7 @@ const RestaurantMenu = () =>
                             ) / 100}</li>
                     })):" "
                 }   
-            </ul>
+            </ul> */}
         </div>
         
         
