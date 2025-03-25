@@ -5,6 +5,7 @@ import Body from "./components/Body"
 import About from "./components/About";
 import Error from "./components/Error";
 import Contact from "./components/Contact";
+import Cart from "./components/Cart";
 import RestaurantMenu from "./components/RestaurantMenu";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom"
 import RestaurantCard from "./components/RestaurantCard";
@@ -12,6 +13,8 @@ import RestaurantCard from "./components/RestaurantCard";
 import { lazy} from "react";
 import { UserContext } from "./utils/UserContext"
 import {useState, useEffect} from "react";
+import {Provider} from "react-redux" //It provides redux store to react application
+import appStore from "./utils/appStore";
 
 // const heading = React.createElement("h1", {
 //     id: "heading",
@@ -86,15 +89,17 @@ const AppLayout = () => {
         };
         setUserInfo(data.name);
     }, []);
-    return (
+    return ( 
         //Overiding the context value
+        <Provider store={appStore}>
+        
         <UserContext.Provider value={{loggedInUser: userInfo, setUserInfo}}>
         <div className="app">
         <Header />
         <Outlet />
         </div>
-
         </UserContext.Provider>
+        </Provider>
     );
 }
 
@@ -122,6 +127,10 @@ const appRouter = createBrowserRouter([ //for router configuration
             {
                 path: "/grocery",
                 element: <Grocery />
+            },
+            {
+                path: "/cart",
+                element: <Cart />
             }
         ],
         errorElement: <Error />, //Error component will be rendered when there is wrong path

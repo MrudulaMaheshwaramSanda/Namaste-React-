@@ -55,3 +55,10 @@ Normal JS utility functions given by React(node_modules)
     Server Side Routing - Making network call for every click
 
  
+# Redux ToolKit
+    -Install @reduxjs/toolkit and react-redux
+    -Build our store
+    -Connect our storeto our app
+    -Slice (cartSlice)
+    -dispatch(slice)
+    -Selector

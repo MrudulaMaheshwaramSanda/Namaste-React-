@@ -1,7 +1,16 @@
-import { RES_LOGO_URL
+import { useDispatch } from "react-redux";
+import { RES_LOGO_URL} from "../utils/constants";
+import { addItem } from "../utils/cartSlice";
 
- } from "../utils/constants";
+
 export const ItemList = ({ items = [] }) => {
+    const dispatch = useDispatch(); //hook used to dispatch an action
+
+    const handleAddItem = (item) => {
+        console.log(item);
+        dispatch(addItem(item))}; //get the exported action items 
+        //dispatch creates object with action.payload as item and sends it to reducer fucntion
+
     return (
         <div>
             {items.map((item) => {
@@ -16,10 +25,23 @@ export const ItemList = ({ items = [] }) => {
                             <p className="text-xs">{info?.description}</p>
                          {/* Assuming price is in paise */}
                         </div>
-                        <div>
-                            {(info?.imageId)? <img className="m-4 w-50" src={RES_LOGO_URL + info?.imageId} />: ""}
+
+                        {(info?.imageId)?(<div className="relative"> 
+                            <img className="m-4 w-50" src={RES_LOGO_URL + info?.imageId} />
+                            <div className="absolute bottom-0 left-1/2 -translate-x-1/2  bg-green-500 text-white px-3 py-1 rounded-lg shadow-md">
+                                <button onClick={() => {
+                                //dispatch an action
+                                handleAddItem(item);
+                                }}>Add to Cart</button>
+                            </div>
+                        </div>):(<div className="m-15 bg-green-500 text-white rounded-lg px-3 py-1">
+                                <button onClick={() => {
+                                //dispatch an action
+                                handleAddItem(item);
+                                }}>Add to Cart</button>
+                            </div>)}
                         
-                        </div>
+                        
 
                     </div>
                 );

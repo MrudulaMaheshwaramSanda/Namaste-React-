@@ -56,7 +56,7 @@ const RestaurantMenu = () =>
             <h1 className = "font-bold my-6 text-2xl">{resInfo?.data?.cards[2]?.card?.card?.info?.name}</h1>
             <p className="font-bold text-lg">{resInfo?.data?.cards[2]?.card?.card?.info?.cuisines.join(" , ")}</p>
             {/* Categories Accordians        */}
-            {categories.map((category, index) => <RestaurantCategory key={category.card.card.title} data={category.card.card} 
+            {categories.map((category, index) => <RestaurantCategory key={category.card.card.id} data={category.card.card} 
             //Parent is controlling the expanding n colapsing accordians
                 showItems={index===showIndex && true}
                 setShowIndex={()=>setShowIndex(index)}/>)}  
