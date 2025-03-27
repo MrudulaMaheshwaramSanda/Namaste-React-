@@ -91,7 +91,7 @@ const AppLayout = () => {
     }, []);
     return ( 
         //Overiding the context value
-        <Provider store={appStore}>
+        <Provider store={appStore}> 
         
         <UserContext.Provider value={{loggedInUser: userInfo, setUserInfo}}>
         <div className="app">

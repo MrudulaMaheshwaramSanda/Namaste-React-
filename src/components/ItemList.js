@@ -27,18 +27,18 @@ export const ItemList = ({ items = [] }) => {
                         </div>
 
                         {(info?.imageId)?(<div className="relative"> 
-                            <img className="m-4 w-50" src={RES_LOGO_URL + info?.imageId} />
+                            <img className="m-2 w-60" src={RES_LOGO_URL + info?.imageId} />
                             <div className="absolute bottom-0 left-1/2 -translate-x-1/2  bg-green-500 text-white px-3 py-1 rounded-lg shadow-md">
                                 <button onClick={() => {
                                 //dispatch an action
                                 handleAddItem(item);
-                                }}>Add to Cart</button>
+                                }}>Add</button>
                             </div>
-                        </div>):(<div className="m-15 bg-green-500 text-white rounded-lg px-3 py-1">
+                        </div>):(<div className="text-center m-15 bg-green-500 text-white rounded-lg px-3 py-1">
                                 <button onClick={() => {
                                 //dispatch an action
                                 handleAddItem(item);
-                                }}>Add to Cart</button>
+                                }}>Add</button>
                             </div>)}
                         
                         

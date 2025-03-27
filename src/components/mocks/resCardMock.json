@@ -1,0 +1,77 @@
+{
+    "@type": "type.googleapis.com/swiggy.presentation.food.v2.Restaurant",
+    "info": {
+        "id": "937907",
+        "name": "Persian Shawarma & More",
+        "cloudinaryImageId": "RX_THUMBNAIL/IMAGES/VENDOR/2024/8/16/94905a85-2897-4ac7-b3dd-e84eeb9fdd5e_937907 (1).jpg",
+        "locality": " Circle No 20",
+        "areaName": "Kondapur",
+        "costForTwo": "₹300 for two",
+        "cuisines": [
+            "Arabian",
+            "Snacks"
+        ],
+        "avgRating": 4.6,
+        "parentId": "437819",
+        "avgRatingString": "4.6",
+        "totalRatingsString": "753",
+        "sla": {
+            "deliveryTime": 20,
+            "lastMileTravel": 4,
+            "serviceability": "SERVICEABLE",
+            "slaString": "20-25 mins",
+            "lastMileTravelString": "4.0 km",
+            "iconType": "ICON_TYPE_EMPTY"
+        },
+        "availability": {
+            "nextCloseTime": "2025-03-27 05:00:00",
+            "opened": true
+        },
+        "badges": {},
+        "isOpen": true,
+        "type": "F",
+        "badgesV2": {
+            "entityBadges": {
+                "imageBased": {},
+                "textBased": {},
+                "textExtendedBadges": {}
+            }
+        },
+        "aggregatedDiscountInfoV3": {
+            "header": "20% OFF",
+            "subHeader": "UPTO ₹50"
+        },
+        "orderabilityCommunication": {
+            "title": {},
+            "subTitle": {},
+            "message": {},
+            "customIcon": {}
+        },
+        "differentiatedUi": {
+            "displayType": "ADS_UI_DISPLAY_TYPE_ENUM_DEFAULT",
+            "differentiatedUiMediaDetails": {
+                "mediaType": "ADS_MEDIA_ENUM_IMAGE",
+                "lottie": {},
+                "video": {}
+            }
+        },
+        "reviewsSummary": {},
+        "displayType": "RESTAURANT_DISPLAY_TYPE_DEFAULT",
+        "restaurantOfferPresentationInfo": {},
+        "externalRatings": {
+            "aggregatedRating": {
+                "rating": "--"
+            }
+        },
+        "ratingsDisplayPreference": "RATINGS_DISPLAY_PREFERENCE_SHOW_SWIGGY"
+    },
+    "analytics": {
+        "context": "seo-data-bf9c337d-1463-438c-b5d7-69158adab100"
+    },
+    "cta": {
+        "link": "https://www.swiggy.com/city/hyderabad/persian-shawarma-and-more-circle-no-20-kondapur-rest937907",
+        "text": "RESTAURANT_MENU",
+        "type": "WEBLINK"
+    },
+    "widgetId": "collectionV5RestaurantListWidget_SimRestoRelevance_food_seo"
+}

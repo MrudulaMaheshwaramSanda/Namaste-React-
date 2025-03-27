@@ -62,3 +62,20 @@ Normal JS utility functions given by React(node_modules)
     -Slice (cartSlice)
     -dispatch(slice)
     -Selector
+
+# Types of testing
+    - Unit testing
+    - Integration Testing
+    - End to End Testing (E2E testing)
+
+# Setting up testing 
+
+    - React testing lib installation
+    - Install Jest
+    - Install jest babel
+    - configure parcel (.parcelrc) to disable default babel 
+    - Jest npx jest --init
+    - Install jsdom library
+    - Install @bable/preset-react - to make JSX work in test cases (babel/preset heps to convert the jsx in render method of texts to html)
+    - Include @bable/preset-react inside my babel config
+    - Install @testing-library/jest-dom - (for tobeindocument funct work)

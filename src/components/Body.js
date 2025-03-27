@@ -2458,7 +2458,7 @@ const Body = () => {
         
     };
 
-    const onlineStatus = useOnlineStatus();
+    const onlineStatus = useOnlineStatus(); //using our own hook
 
     if(onlineStatus === false){
         return (
@@ -2849,7 +2849,16 @@ const Body = () => {
                     (e) => {
                         setSearchText(e.target.value);  //updating the search text based on the value, for every key that we give in search box the whole body component will be re rendered as state variable is changing
                     }
-                } placeholder="Type your fav Restaurant" />
+                }  
+                onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                        const filteredList = listOfRestaurants.filter((restaurant) =>
+                            restaurant.info.name.toLowerCase().includes(searchText.toLowerCase())
+                        );
+                        setFilteredRestaurants(filteredList);
+                    }
+                }}
+                placeholder="Type your fav Restaurant" />
                 <button className="m-4 px-2 py-0.5 bg-green-400 border-black rounded-lg hover:cursor-pointer hover:bg-green-500" onClick = {() => {
                         const filterRestaurants = 
                             listOfRestaurants.filter((resturant) => (resturant.info.name.toLowerCase()).includes(searchText.toLowerCase())
@@ -2857,7 +2866,10 @@ const Body = () => {
 
                         setFilteredRestaurants(filterRestaurants);
                     }
-                }>Search</button>
+                }
+                
+
+                >Search</button>
             </div>
             <div className="flex px-2 items-center">
                 <button className="px-2 py-1 border border-black rounded-lg bg-gray-100 hover:cursor-pointer hover:bg-gray-300" onClick={() => { 

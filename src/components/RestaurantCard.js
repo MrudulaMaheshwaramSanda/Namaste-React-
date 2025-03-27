@@ -4,6 +4,9 @@ import { UserContext } from "../utils/UserContext";
 
 const RestaurantCard = (props) => {
     const {resData} = props;
+
+    console.log(resData);
+    
     const {loggedInUser} = useContext(UserContext); //access data from anywhere using react context
     return (
         <div className="m-4 p-4 w-[300px] bg-gray-100 hover:bg-gray-200 rounded-lg text-center" >
