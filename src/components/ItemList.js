@@ -17,7 +17,7 @@ export const ItemList = ({ items = [] }) => {
                 const info = item?.card?.info; // Extracting the relevant info object
                 
                 return (
-                    <div key={info?.id} className="p-2 m-2 border-gray-200 border-b-2 text-left flex justify-between ">
+                    <div data-testid="fooditems" key={info?.id} className="p-2 m-2 border-gray-200 border-b-2 text-left flex justify-between ">
                         
                         <div className="p-2">
                             <span className="font-bold">{info?.name}</span>

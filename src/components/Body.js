@@ -2845,7 +2845,7 @@ const Body = () => {
     return ((listOfRestaurants.length===0)?<Shimmer/>:(<div className="body">
         <div className="flex">
             <div className="search p-4">
-                <input type="text" className="border border-solid border-black" value={searchText} onChange={
+                <input type="text" data-testid="searchInput" className="border border-solid border-black" value={searchText} onChange={
                     (e) => {
                         setSearchText(e.target.value);  //updating the search text based on the value, for every key that we give in search box the whole body component will be re rendered as state variable is changing
                     }

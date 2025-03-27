@@ -5,6 +5,22 @@ import Contact from "../Contact";
 import "@testing-library/jest-dom";
 
 describe("Contact us page test cases", () => {  //Grouping the test cases
+beforeAll(()=>{
+    console.log("Run Before all the test cases");
+});
+
+beforeEach(()=>{
+    console.log("Run After All Test Cases");
+});
+
+afterEach(()=>{
+    console.log("After each test case");
+})
+
+afterAll(()=>{
+    console.log("After all test cases");
+})
+
 it("Should load contact us component", ()=>
 {
     render(<Contact />)  //Contact component will be rendered onto js dom
